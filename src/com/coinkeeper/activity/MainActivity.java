@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.animation.ScaleAnimation;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.ScrollView;
 
 import com.coinkeeper.classes.Category;
@@ -215,7 +216,7 @@ public class MainActivity extends Activity implements OnTouchListener{
 			} else
 			if (e.getAction()==MotionEvent.ACTION_UP){
 				calendar.startAnimation(scale2);
-				intent = new Intent(MainActivity.this, CalendarActivity.class);
+				intent = new Intent(MainActivity.this, CalendarView.class);
 				startActivity(intent);
 				overridePendingTransition(R.anim.left_in, R.anim.left_out);
 			} else
