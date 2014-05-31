@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollview"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/background_dark"
+    android:scrollbars="none" >
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1.0"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.0"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/gains"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1.0"
+                android:background="@color/emerald"
+                android:drawableRight="@drawable/billingcalendardollar"
+                android:text="Доходы"
+                android:textColor="@android:color/white"
+                android:textSize="23sp" />
+
+            <Button
+                android:id="@+id/budget"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1.0"
+                android:background="@color/cobalt"
+                android:drawableRight="@drawable/billing"
+                android:text="Бюджет"
+                android:textColor="@android:color/white"
+                android:textSize="23sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.0"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/costs"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1.0"
+                android:background="@color/red"
+                android:drawableRight="@drawable/billingcurrencydollar"
+                android:text="Расходы"
+                android:textColor="@android:color/white"
+                android:textSize="23sp" />
+
+            <Button
+                android:id="@+id/statistics"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:layout_weight="1.0"
+                android:background="@color/orange"
+                android:drawableBottom="@drawable/billingcart"
+                android:text="Статистика"
+                android:textColor="@android:color/white"
+                android:textSize="23sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1.0"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/calendar"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_margin="5dp"
+            android:layout_weight="1.0"
+            android:background="@color/yellow"
+            android:drawableBottom="@drawable/billingcart"
+            android:drawableTop="@drawable/billingcalendar31"
+            android:text="Календарь"
+            android:textColor="@color/cobalt"
+            android:textSize="23sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.0"
+            android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/notes"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1.0"
+                android:background="@color/brown"
+                android:drawableRight="@drawable/billingbooklist"
+                android:text="Заметки"
+                android:textColor="@android:color/white"
+                android:textSize="23sp" />
+
+            <Button
+                android:id="@+id/settings"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1.0"
+                android:background="@color/olive"
+                android:drawableBottom="@drawable/billingcog"
+                android:text="Настройки"
+                android:textColor="@android:color/white"
+                android:textSize="23sp" />
+        </LinearLayout>
+    </LinearLayout>
+	</LinearLayout>>
+</ScrollView>

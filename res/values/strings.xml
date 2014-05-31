@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Финансовый менеджер</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string-array name="gain">
+        <item>Кіріс</item>
+        <item>Доходы</item>
+    </string-array>
+    <string-array name="costs">
+        <item>Шығыс</item>
+        <item>Расходы</item>
+    </string-array>
+      <string-array name="addCosts">
+        <item>Шығысты қосу</item>
+        <item>Добавить расход</item>
+    </string-array>
+    <string-array name="budget">
+        <item>Бюджет</item>
+        <item>Бюджет</item>
+    </string-array>
+    <string-array name="statistics">
+        <item>Статистика</item>
+        <item>Статистика</item>
+    </string-array>
+    <string-array name="calendar">
+        <item>Күнтізбе</item>
+        <item>Календарь</item>
+    </string-array>
+    <string-array name="notes">
+        <item>Белгілер</item>
+        <item>Заметки</item>
+    </string-array>
+    <string-array name="settings">
+        <item>Настройки</item>
+        <item>Настройки</item>
+    </string-array>
+    <string-array name="chooselang">
+        <item>Тілді таңдаңыз</item>
+        <item>Выберите язык</item>
+    </string-array>
+    
+    <string-array name="addGain">
+        <item>Кірісті қосу</item>
+        <item>Добавить доход</item>
+    </string-array>
+    
+</resources>

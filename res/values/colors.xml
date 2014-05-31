@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+ 
+    <item name="blue" type="color">#FF33B5E5</item>
+    <item name="purple" type="color">#FFAA66CC</item>
+    <item name="red" type="color">#FFE51400</item>
+    <item name="darkblue" type="color">#FF0099CC</item>
+    <item name="darkpurple" type="color">#FF9933CC</item>
+    <item name="darkgreen" type="color">#FF669900</item>
+    <item name="darkorange" type="color">#FFFF8800</item>
+    <item name="darkred" type="color">#FFCC0000</item>
+    <item name="indigo" type="color">#FF6A00FF</item>
+    <item name="emerald" type="color">#FF008A00</item>
+    <item name="olive" type="color">#FF6D8764</item>
+    <item name="teal" type="color">#FF6D8764</item>
+    <item name="lime" type="color">#FFA4C400</item>
+    <item name="green" type="color">#FF60A917</item>
+    <item name="cyan" type="color">#FF1BA1E2</item>
+    <item name="cobalt" type="color">#FF0050EF</item>
+    <item name="violet" type="color">#FFAA00FF</item>
+    <item name="pink" type="color">#FFF472D0</item>
+    <item name="magenta" type="color">#FFD80073</item>
+    <item name="crimson" type="color">#FFA20025</item>
+    <item name="orange" type="color">#FFFA6800</item>
+	<item name="amber" type="color">#FFF0A30A</item>
+	<item name="yellow" type="color">#FFE3C800</item>
+	<item name="brown" type="color">#FF825A2C</item>
+	<item name="steel" type="color">#FF647687</item>
+	<item name="mauve" type="color">#FF76608A</item>
+	<item name="taupe" type="color">#FF87794E</item>
+</resources> 
