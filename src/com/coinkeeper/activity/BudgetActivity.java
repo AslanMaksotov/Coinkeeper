@@ -169,7 +169,6 @@ public class BudgetActivity extends Activity {
 				textProgressBar.setProgressDrawable(getResources().getDrawable(
 						R.drawable.progress_red));
 			}
-			
 			textProgressBar.setText(percent + "%");
 			textProgressBar.setTextSize(28);
 			textProgressBar.setProgress((int)percent);
