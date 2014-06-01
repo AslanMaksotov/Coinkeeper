@@ -174,6 +174,7 @@ public class AddGainActivity extends Activity implements OnClickListener{
 			String sName = name.getText().toString(); 
 			String sComment = comment.getText().toString();
 			String sDate = tvDisplayDate.getText().toString();
+			Log.d("Added Gain", "."+sDate+".");
 			int sCount = Integer.parseInt(String.valueOf(spinnerCount.getSelectedItem())); // getting from spinner selected number
 			int sType  = (int) spinnerType.getSelectedItemId(); // getting from spinner selected type id
 			if (!sName.isEmpty() && sMoney!=0 && !sComment.isEmpty() && categoryId!=-1) {

@@ -185,6 +185,52 @@ public class Bridge {
 		
 		return result;
 	}
+	public ArrayList<Gain> getGainlistByDate(String date){
+		ArrayList<Gain> result = new ArrayList<Gain>();
+		Cursor c = db.rawQuery("SELECT * FROM " + DBOpenHelper.db_table_gain + " WHERE "+DBOpenHelper.d_gain_date +" = "+ date, null);
+		c.moveToFirst();
+		Gain gain;
+		while (!c.isAfterLast()) {
+			gain = new Gain();
+			gain.setId(c.getInt(0));
+			gain.setCategoryId(c.getInt(1));
+			gain.setName(c.getString(2));
+			gain.setMoney(c.getFloat(3));
+			gain.setDate(c.getString(4));
+			if (c.getInt(5)==1)gain.setRepeat(true); else gain.setRepeat(false);
+			gain.setCount(c.getInt(6));
+			gain.setType(c.getInt(7));
+			gain.setComments(c.getString(8));
+			result.add(gain);
+			c.moveToNext();
+		}
+		c.close();
+		
+		return result;
+	}
+	public ArrayList<Costs> getCostlistByDate(String date){
+		ArrayList<Costs> result = new ArrayList<Costs>();
+		Cursor c = db.rawQuery("SELECT * FROM " + DBOpenHelper.db_table_costs + " WHERE "+DBOpenHelper.d_costs_date +" = "+ date, null);
+		c.moveToFirst();
+		Costs cost;
+		while (!c.isAfterLast()) {
+			cost = new Costs();
+			cost.setId(c.getInt(0));
+			cost.setCategoryId(c.getInt(1));
+			cost.setName(c.getString(2));
+			cost.setMoney(c.getFloat(3));
+			cost.setDate(c.getString(4));
+			if (c.getInt(5)==1)cost.setRepeat(true); else cost.setRepeat(false);
+			cost.setCount(c.getInt(6));
+			cost.setType(c.getInt(7));
+			cost.setComments(c.getString(8));
+			result.add(cost);
+			c.moveToNext();
+		}
+		c.close();
+		
+		return result;
+	}
 	public ArrayList<Costs> getCostsList() {
 		ArrayList<Costs> result = new ArrayList<Costs>();
 		Cursor c = db.rawQuery("SELECT * FROM "+DBOpenHelper.db_table_costs, null);

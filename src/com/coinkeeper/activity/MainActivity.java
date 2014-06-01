@@ -5,16 +5,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.animation.ScaleAnimation;
 import android.widget.Button;
-import android.widget.CalendarView;
 import android.widget.ScrollView;
 
+import com.coinkeeper.calendar.CalendarViewExample;
 import com.coinkeeper.classes.Category;
 import com.coinkeeper.db.Bridge;
 
@@ -216,7 +215,7 @@ public class MainActivity extends Activity implements OnTouchListener{
 			} else
 			if (e.getAction()==MotionEvent.ACTION_UP){
 				calendar.startAnimation(scale2);
-				intent = new Intent(MainActivity.this, CalendarView.class);
+				intent = new Intent(MainActivity.this, CalendarViewExample.class);
 				startActivity(intent);
 				overridePendingTransition(R.anim.left_in, R.anim.left_out);
 			} else

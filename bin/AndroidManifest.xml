@@ -74,7 +74,7 @@
             >
         </activity>
         <activity 
-            android:name="com.coinkeeper.calendar.CalendarView"
+            android:name="com.coinkeeper.calendar.CalendarViewExample"
             >
         </activity>
     </application>
