@@ -77,7 +77,38 @@
                     android:gravity="right"
                     android:hint="Название" />
             </RelativeLayout>
+			
+             <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray" />
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="15dp" >
+
+                <TextView
+                    android:id="@+id/tvAimMoney"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:text="В Бюджет"
+                    android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium" />
+
+                <Spinner
+                    android:id="@+id/spBudget"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="100dp"
+                    android:layout_toRightOf="@+id/tvAimMoney" />
+
+            </RelativeLayout>
+            
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="1dp"

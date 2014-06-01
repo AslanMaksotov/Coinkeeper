@@ -10,12 +10,23 @@ public class Costs {
 	private int count;
 	private int type;
 	private int id;
+	private int budgetId;
 	
+	public int getBudgetId() {
+		return budgetId;
+	}
+
+
+	public void setBudgetId(int budgetId) {
+		this.budgetId = budgetId;
+	}
+
+
 	public Costs() {}
 	
 	
 	public Costs(float money, int categoryId, String name, String date,
-			String comments, boolean repeat, int count, int type) {
+			String comments, boolean repeat, int count, int type, int budgetId) {
 		super();
 		this.money = money;
 		this.categoryId = categoryId;
@@ -25,6 +36,7 @@ public class Costs {
 		this.repeat = repeat;
 		this.count = count;
 		this.type = type;
+		this.budgetId = budgetId;
 	}
 	
 	

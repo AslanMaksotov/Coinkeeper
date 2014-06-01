@@ -31,6 +31,7 @@ public class DBOpenHelper extends SQLiteOpenHelper{
 	public static final String d_costs_repeat = "repeat";
 	public static final String d_costs_count = "count";
 	public static final String d_costs_type = "type";
+	public static final String d_costs_budget_id = "budget_id";
 	
 	public static final String db_table_gain = "gain";
 	public static final String d_gain_id = "_id";
@@ -71,6 +72,7 @@ public class DBOpenHelper extends SQLiteOpenHelper{
 			d_costs_repeat+" integer, "+
 			d_costs_count+" integer, "+
 			d_costs_type+" integer, "+
+			d_costs_budget_id+" integer, "+
 			d_costs_comments+" text not null);";
 	
 	private static final String db_create_table_gain = "create table "+db_table_gain+"("+

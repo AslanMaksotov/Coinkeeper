@@ -1,5 +1,6 @@
 package com.coinkeeper.activity;
 
+import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 import android.app.ActionBar;
@@ -26,6 +27,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.coinkeeper.classes.Budget;
 import com.coinkeeper.classes.Category;
 import com.coinkeeper.classes.Costs;
 import com.coinkeeper.db.Bridge;
@@ -41,7 +43,7 @@ public class EditCostsActivity extends Activity implements OnClickListener {
 	ImageView addCategory;
 	EditText money, name, comment;
 	TextView category_name;
-	Spinner spinnerCount, spinnerType;
+	Spinner spinnerCount, spinnerType, spinnerBudget;
 	CheckBox repeat;
 	LinearLayout content;
 	TextView tvDisplayDate;
@@ -52,7 +54,8 @@ public class EditCostsActivity extends Activity implements OnClickListener {
 	int id;
 	int categoryId;
 	Bridge b;
-	String[] countArray, typeArray;
+	String[] countArray, typeArray, budgetArray;
+	int[] budgetId;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -80,10 +83,24 @@ public class EditCostsActivity extends Activity implements OnClickListener {
 		typeArray[2] = "Месяц (ы)";
 		typeArray[3] = "Год (-ы)";
 
-
 		id = getIntent().getExtras().getInt("id");
 
 		b = new Bridge(this);
+		
+		b.open();
+		ArrayList<Budget> list = b.getBudgetList();
+		budgetArray = new String [list.size()+1];
+		budgetArray[0] = "Другое";
+		
+		budgetId = new int[list.size()+1];
+		budgetId[0] = -1;
+		
+		for(int i = 0; i < list.size() ; i++ ){
+			budgetArray[i+1] = list.get(i).getName();
+			budgetId[i+1] = list.get(i).getId();
+		}
+		b.close();
+		
 
 		delete = (Button) findViewById(R.id.delete); // Button to cancel
 														// addition of gain
@@ -106,18 +123,39 @@ public class EditCostsActivity extends Activity implements OnClickListener {
 		repeat = (CheckBox) findViewById(R.id.repeat);
 		repeat.setOnClickListener(this);
 		content = (LinearLayout) findViewById(R.id.content);
+		
 		spinnerCount = (Spinner) findViewById(R.id.count);
 		spinnerType = (Spinner) findViewById(R.id.type);
+		spinnerBudget = (Spinner) findViewById(R.id.spBudget);
+		
+		
 		ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, countArray);
 		dataAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinnerCount.setAdapter(dataAdapter1);
+		
 		ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, typeArray);
 		dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinnerType.setAdapter(dataAdapter2);
+		
+		ArrayAdapter<String> dataAdapter3 = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, budgetArray);
+		dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spinnerBudget.setAdapter(dataAdapter3);
+		
+		
 		b.open();
 		Costs costs = b.getCostsById(id);
+		
 		Category category = b.getCategoryById(costs.getCategoryId());
 		categoryId = category.getId();
+		
+		for(int i = 0 ; i < budgetId.length; i++){
+			if(budgetId [i] == costs.getBudgetId()){
+				spinnerBudget.setSelection(i);
+			}
+		}
+		
+		
+		
 		Log.d("Id", id + "");
 		b.close();
 		addCategory.setImageResource(ImagesStore.images[category.getImage_id()]);
@@ -134,6 +172,8 @@ public class EditCostsActivity extends Activity implements OnClickListener {
 			content.setVisibility(View.GONE);
 		}
 		setCurrentDateOnView(costs.getDate());
+		
+		
 
 	}
 
@@ -196,12 +236,17 @@ public class EditCostsActivity extends Activity implements OnClickListener {
 			String sName = name.getText().toString();
 			String sComment = comment.getText().toString();
 			String sDate = tvDisplayDate.getText().toString();
+			
 			int sCount = Integer.parseInt(String.valueOf(spinnerCount.getSelectedItem())); // getting from spinner selected number
 			int sType = (int) spinnerType.getSelectedItemId(); // getting from spinner selected type id
+			int sBudget = (int) spinnerBudget.getSelectedItemId(); // getting from spinner selected type id
+			
 			if (!sName.isEmpty() && sMoney != 0 && !sComment.isEmpty()) {
 				b.open();
+				
 				Costs costs = new Costs(sMoney, categoryId, sName, sDate,
-						sComment, repeat.isChecked(), sCount, sType);
+						sComment, repeat.isChecked(), sCount, sType, budgetId[sBudget]);
+				
 				b.editCostsById(costs, id);
 				b.close();
 				onBackPressed();
