@@ -1,5 +1,6 @@
 package com.coinkeeper.activity;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import android.app.ActionBar;
@@ -9,7 +10,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,6 +27,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.coinkeeper.classes.Budget;
 import com.coinkeeper.classes.Costs;
 import com.coinkeeper.db.Bridge;
 import com.coinkeeper.db.ImagesStore;
@@ -38,10 +39,12 @@ public class AddCostsActivity extends Activity implements OnClickListener {
 	ActionBar actionBar;
 	LayoutInflater inflater;
 	Button cancel, save, changeData;
-	ImageView addCategory;
+	
+	ImageView addCategory, addBudget;
+	
 	EditText money, name, comment;
 	TextView category_name, date;
-	Spinner spinnerCount, spinnerType;
+	Spinner spinnerCount, spinnerType,spinnerBudget;
 	LinearLayout content; // this one
 	CheckBox repeat;
 	TextView tvDisplayDate;
@@ -53,15 +56,16 @@ public class AddCostsActivity extends Activity implements OnClickListener {
 	int categoryId;
 
 	Bridge b;
-	String[] countArray, typeArray;
-	int lang;
-	SharedPreferences prefs;
+	String[] countArray, typeArray, budgetArray;
+	int [] budgetId;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_addcosts);
+		Log.d("check", "it's worked!!!");
 		
 		actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
@@ -70,12 +74,9 @@ public class AddCostsActivity extends Activity implements OnClickListener {
         actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         ImageView imageView = (ImageView)view.findViewById(R.id.costicon);
-        imageView.setBackground(getResources().getDrawable(R.drawable.add));
-        prefs = getSharedPreferences("com.coinkeeper.activity", Context.MODE_PRIVATE);
+        imageView.setBackground(getResources().getDrawable(R.drawable.edit));
         TextView title = (TextView) view.findViewById(R.id.title);
-        lang = prefs.getInt("com.coinkeeper.language", 1);
-		String[] language = getResources().getStringArray(R.array.addCosts);
-		title.setText(language[lang]);
+        title.setText("Добавить расход");
         
 		countArray = new String[50];
 		for (int i = 0; i < 50; i++)
@@ -90,16 +91,42 @@ public class AddCostsActivity extends Activity implements OnClickListener {
 
 
 		b = new Bridge(this);
+		
+		b.open();
+			ArrayList<Budget> list = b.getBudgetList();
+			//Log.d("list size", list.size()+"");
+			budgetArray = new String [list.size()+1];
+			budgetArray[0] = "Другое";
+			
+			budgetId = new int[list.size()+1];
+			budgetId[0] = -1;
+			
+			for(int i = 0; i < list.size() ; i++ ){
+				budgetArray[i+1] = list.get(i).getName();
+				budgetId[i+1] = list.get(i).getId();
+			}
+		b.close();
+		
+		
 		cancel = (Button) findViewById(R.id.cancel);
 		save = (Button) findViewById(R.id.save);
+		
 		addCategory = (ImageView) findViewById(R.id.add_category);
+		addBudget = (ImageView) findViewById(R.id.add_budget);
+		
+		
 		changeData = (Button) findViewById(R.id.change_data);
+		
 		addCategory.setImageResource(ImagesStore.images[0]);
+		
 		addCategory.setBackgroundColor(getResources().getColor(R.color.red));
+		
 		cancel.setOnClickListener(this); // setting click listener, make events
 											// when button is clicked
 		save.setOnClickListener(this);
+		
 		addCategory.setOnClickListener(this);
+		
 		changeData.setOnClickListener(this);
 
 		money = (EditText) findViewById(R.id.money);
@@ -116,12 +143,20 @@ public class AddCostsActivity extends Activity implements OnClickListener {
 
 		spinnerCount = (Spinner) findViewById(R.id.count);
 		spinnerType = (Spinner) findViewById(R.id.type);
+		spinnerBudget = (Spinner) findViewById(R.id.spBudget);
+		
 		ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, countArray);
 		dataAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinnerCount.setAdapter(dataAdapter1);
+		
 		ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, typeArray);
 		dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinnerType.setAdapter(dataAdapter2);
+		
+		ArrayAdapter<String> dataAdapter3 = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, budgetArray);
+		dataAdapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spinnerBudget.setAdapter(dataAdapter3);
+		
 	}
 	public void setCategory(int id, String name, int imageId){
 		category_name.setText(name);
@@ -173,15 +208,19 @@ public class AddCostsActivity extends Activity implements OnClickListener {
 			String sDate = tvDisplayDate.getText().toString();
 			int sCount = Integer.parseInt(String.valueOf(spinnerCount .getSelectedItem()));// getting from spinner selected number
 			int sType = (int) spinnerType.getSelectedItemId();// getting from spinner selected type id
-			if (!sName.isEmpty() && sMoney != 0 && !sComment.isEmpty() && categoryId!=-1) {
+			
+			int sBudgetId = (int) spinnerBudget.getSelectedItemId(); // getting from spinner selected budget id
+			
+			if (!sName.isEmpty() && sMoney != 0 && !sComment.isEmpty() && categoryId!=-1){
 				b.open();
-				Costs costs = new Costs(sMoney, categoryId, sName, sDate, sComment, repeat.isChecked(), sCount, sType);
+				Costs costs = new Costs(sMoney, categoryId, sName, sDate, sComment, repeat.isChecked(), sCount, sType, budgetId[sBudgetId]);
 				b.createCosts(costs);
 				b.close();
 				onBackPressed();
 			} else {
 				Toast.makeText(AddCostsActivity.this, "Пожалуйста заполните пустые поля!", Toast.LENGTH_LONG).show();
 			}
+		
 		}
 
 	}

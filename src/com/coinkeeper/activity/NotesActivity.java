@@ -1,7 +1,13 @@
 package com.coinkeeper.activity;
 
+import java.util.ArrayList;
+
+import com.coinkeeper.classes.Notes;
+import com.coinkeeper.db.Bridge;
+
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,21 +16,32 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 public class NotesActivity extends Activity{
+	static final int NOTE_DIALOG_ID = 999; // is needed for showing notes dialog
+	
 	ActionBar actionBar;
 	LayoutInflater inflater;
 	MyAdapter adapter;
 	SharedPreferences prefs;
+	Bridge b;
+	ArrayList<Notes> notesList;
+	
+	TextView date_time;
+	
 	int lang;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		
 		setContentView(R.layout.activity_notes);
+		
 		prefs = getSharedPreferences("com.coinkeeper.activity", Context.MODE_PRIVATE);
 		actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
@@ -36,17 +53,51 @@ public class NotesActivity extends Activity{
         lang = prefs.getInt("com.coinkeeper.language", 1);
 		String[] language = getResources().getStringArray(R.array.notes);
 		title.setText(language[lang]);
+		
         ImageView back = (ImageView)view.findViewById(R.id.back);
+        
         back.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
 				onBackPressed();
 			}
 		});
-
+        
+        Button addNote = (Button) findViewById(R.id.add_note);
+        addNote.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				showDialog(NOTE_DIALOG_ID);
+			}
+		});
+        
+        
+        inflater = LayoutInflater.from(this);
+        b = new Bridge(this);
+        b.open();
+        
+        b.close();
+        
+        
+        adapter = new MyAdapter();
+        ListView listView = (ListView) findViewById(R.id.list);
+        listView.setAdapter(adapter);
+        
         
 	}
+	
+	
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		switch (id) {
+		case NOTE_DIALOG_ID:
+			return new AddNoteDialog(this);
+		}
+		
+		return null;
+	}
+	
 	private class MyAdapter extends BaseAdapter{
 
 		@Override
@@ -75,19 +126,12 @@ public class NotesActivity extends Activity{
 		    if(convertView==null)
 		    {
 		        LayoutInflater li = (NotesActivity.this).getLayoutInflater();
-		        v = li.inflate(R.layout.row_gain, null);
+		        v = li.inflate(R.layout.row_notes, null);
 		    }else{
 		        v = (View)convertView;
 		    }
 		    
-			
-	        
-	        ImageView category_icon = (ImageView) v.findViewById(R.id.category_icon);
-	        TextView title = (TextView) v.findViewById(R.id.title);
-	        TextView comments = (TextView) v.findViewById(R.id.comments);
-	        TextView money = (TextView) v.findViewById(R.id.money);
-	        TextView date = (TextView) v.findViewById(R.id.date);
-	        
+		    
 			return v;
 		}
 		
