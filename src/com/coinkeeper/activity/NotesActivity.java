@@ -208,7 +208,6 @@ public class NotesActivity extends Activity {
 			showDialog(id);
 			break;
 		}
-
 	}
 
 	@Override
@@ -305,19 +304,16 @@ public class NotesActivity extends Activity {
 
 		@Override
 		public int getCount() {
-			// TODO Auto-generated method stub
 			return notesList.size();
 		}
 
 		@Override
 		public Object getItem(int pos) {
-			// TODO Auto-generated method stub
 			return null;
 		}
 
 		@Override
 		public long getItemId(int pos) {
-			// TODO Auto-generated method stub
 			return 0;
 		}
 
@@ -343,7 +339,6 @@ public class NotesActivity extends Activity {
 
 			return v;
 		}
-
 	}
 
 	@Override
@@ -382,9 +377,6 @@ public class NotesActivity extends Activity {
 			con.setTime(sTime);
 		}
 	};
-	
-	
-	
 
 	private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
 		// when dialog box is closed, below method will be called.
