@@ -382,6 +382,9 @@ public class NotesActivity extends Activity {
 			con.setTime(sTime);
 		}
 	};
+	
+	
+	
 
 	private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
 		// when dialog box is closed, below method will be called.
