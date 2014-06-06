@@ -7,12 +7,14 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.provider.ContactsContract.CommonDataKinds.Note;
 import android.util.Log;
 
 import com.coinkeeper.classes.Budget;
 import com.coinkeeper.classes.Category;
 import com.coinkeeper.classes.Costs;
 import com.coinkeeper.classes.Gain;
+import com.coinkeeper.classes.Notes;
 
 public class Bridge {
 	SQLiteDatabase db;
@@ -81,7 +83,7 @@ public class Bridge {
 		Budget budget = getBudgetById(bId);
 
 		ContentValues values = new ContentValues();
-		values.put(DBOpenHelper.d_budget_paid, (budget.getPaid()+money));
+		values.put(DBOpenHelper.d_budget_paid, (budget.getPaid() + money));
 
 		try {
 			db.update(DBOpenHelper.db_table_budget, values,
@@ -95,10 +97,9 @@ public class Bridge {
 		Cursor c = db.rawQuery("SELECT * FROM " + DBOpenHelper.db_table_budget
 				+ " WHERE " + DBOpenHelper.d_budget_id + "=" + bId, null);
 		Budget budget = new Budget();
-		
+
 		c.moveToFirst();
 		while (!c.isAfterLast()) {
-			
 
 			budget.setId(c.getInt(0));
 			budget.setName(c.getString(1));
@@ -108,7 +109,7 @@ public class Bridge {
 			c.moveToNext();
 		}
 		c.close();
-		
+
 		return budget;
 	}
 
@@ -218,7 +219,7 @@ public class Bridge {
 	public void deleteCosts(int id) {
 		try {
 			resetCosts(id);
-			
+
 			db.delete(DBOpenHelper.db_table_costs, DBOpenHelper.d_costs_id
 					+ " = " + id, null);
 		} catch (SQLException e) {
@@ -230,8 +231,8 @@ public class Bridge {
 		Costs costs = getCostsById(id);
 		int bId = costs.getBudgetId();
 		Budget budget = getBudgetById(bId);
-		float money = budget.getPaid() - costs.getMoney() ;
-		
+		float money = budget.getPaid() - costs.getMoney();
+
 		ContentValues values = new ContentValues();
 		values.put(DBOpenHelper.d_budget_paid, money);
 
@@ -336,7 +337,7 @@ public class Bridge {
 
 		int bId = c.getBudgetId();
 		float money = c.getMoney();
-		
+
 		values.put(DBOpenHelper.d_costs_money, money);
 		values.put(DBOpenHelper.d_costs_name, c.getName());
 		values.put(DBOpenHelper.d_costs_category_id, c.getCategoryId());
@@ -346,12 +347,11 @@ public class Bridge {
 		values.put(DBOpenHelper.d_costs_type, c.getType());
 		values.put(DBOpenHelper.d_costs_budget_id, c.getBudgetId());
 		values.put(DBOpenHelper.d_costs_comments, c.getComments());
-		
+
 		if (bId != -1) {
 			setBudget(bId, money);
 		}
-		
-		
+
 		try {
 			db.update(DBOpenHelper.db_table_costs, values,
 					DBOpenHelper.d_costs_id + " = " + id, null);
@@ -383,6 +383,24 @@ public class Bridge {
 		}
 		c.close();
 		return costs;
+	}
+	
+	
+	public Notes getNoteById(int noteId) {
+		Notes notes = new Notes();
+		Cursor c = db.rawQuery("SELECT * FROM " + DBOpenHelper.db_table_notes
+				+ " WHERE " + DBOpenHelper.d_notes_id + " = " + noteId, null);
+		c.moveToFirst();
+		while (!c.isAfterLast()) {
+			notes.setId(c.getInt(0));
+			notes.setContent(c.getString(1));
+			notes.setTime(c.getString(2));
+			notes.setDate(c.getString(3));
+			c.moveToNext();
+		}
+		c.close();
+		
+		return notes;
 	}
 
 	public void createCategory(Category c) {
@@ -421,4 +439,50 @@ public class Bridge {
 
 		return (gain - costs);
 	}
+
+	public void createNote(Notes notes) {
+		ContentValues values = new ContentValues();
+		values.put(DBOpenHelper.d_notes_content, notes.getContent());
+		values.put(DBOpenHelper.d_notes_time, notes.getTime());
+		values.put(DBOpenHelper.d_notes_date, notes.getDate());
+		try {
+			db.insert(DBOpenHelper.db_table_notes, null, values);
+		} catch (SQLException e) {
+			Log.e("Sql Exception", e.getMessage());
+		}
+		Log.d("Note is", "created");
+	}
+	
+	public ArrayList<Notes> getNoteList(){
+		ArrayList<Notes> result = new ArrayList<Notes>();
+		
+		Cursor c = db.rawQuery("SELECT * FROM " + DBOpenHelper.db_table_notes,
+				null);
+		c.moveToFirst();
+		while (!c.isAfterLast()) {
+			Notes notes = new Notes();
+			
+			notes.setId(c.getInt(0));
+			notes.setContent(c.getString(1));
+			notes.setTime(c.getString(2));
+			notes.setDate(c.getString(3));
+			result.add(notes);
+			c.moveToNext();
+		}
+		c.close();
+		
+		return result;
+	}
+	
+	public void deleteNote(int id){
+		try {
+			db.delete(DBOpenHelper.db_table_notes, DBOpenHelper.d_notes_id
+					+ " = " + id, null);
+		}catch (SQLException e) {
+			Log.e("SQL", e.getMessage());
+		}
+	}
+
+	
+	
 }

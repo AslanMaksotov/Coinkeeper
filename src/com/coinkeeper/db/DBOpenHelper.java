@@ -46,8 +46,8 @@ public class DBOpenHelper extends SQLiteOpenHelper{
 	
 	public static final String db_table_notes = "notes";
 	public static final String d_notes_id = "_id";
-	public static final String d_notes_name = "name";
-	public static final String d_notes_money = "money";
+	public static final String d_notes_content = "content";
+	public static final String d_notes_time = "time";
 	public static final String d_notes_date = "date";
 	
 	private static final String db_create_table_category = "create table "+db_table_category+"("+
@@ -88,8 +88,8 @@ public class DBOpenHelper extends SQLiteOpenHelper{
 	
 	private static final String db_create_table_notes = "create table "+db_table_notes+"("+
 			d_notes_id+" integer primary key , "+
-			d_notes_name+" text not null, "+
-			d_notes_money+" real, "+
+			d_notes_content+" text not null, "+
+			d_notes_time+" text not null, "+
 			d_notes_date+" text not null);";
 	
 	

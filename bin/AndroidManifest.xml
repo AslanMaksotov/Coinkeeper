@@ -73,6 +73,11 @@
             android:theme="@android:style/Theme.Light.NoTitleBar" 
             >
         </activity>
+        
+        <service android:name="com.coinkeeper.activity.NoteAlarmService"
+                 android:enabled="true" />
+         
+        <receiver android:name="com.coinkeeper.activity.NoteReceiver"/>
     </application>
 
 </manifest>

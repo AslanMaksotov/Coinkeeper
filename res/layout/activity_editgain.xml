@@ -112,12 +112,12 @@
                     android:textAlignment="gravity"
                     android:gravity="right"
                     android:layout_toLeftOf="@+id/add_category"
-                    android:layout_toRightOf="@+id/textView1"
+                    android:layout_toRightOf="@+id/time"
                     android:text="Без названия"
                     android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium" />
 
                 <TextView
-                    android:id="@+id/textView1"
+                    android:id="@+id/time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -157,7 +157,7 @@
                     android:text="Май 12, 2014 " />
 
                 <TextView
-                    android:id="@+id/textView1"
+                    android:id="@+id/time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -180,7 +180,7 @@
                 >
 
                 <TextView
-                    android:id="@+id/textView1"
+                    android:id="@+id/time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -194,7 +194,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:layout_toRightOf="@+id/textView1"
+                    android:layout_toRightOf="@+id/time"
                     android:hint="Комментарии" />
                 
             </RelativeLayout>
